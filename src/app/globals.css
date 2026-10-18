@@ -1,26 +1,347 @@
 @import "tailwindcss";
 
+/*
+  Vexoraa design tokens.
+  Three fields: ink (night listening), bone (cool paper), cobalt (signal).
+  Accent colour only ever appears as a whole field or as the primary action.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #0b0b0d;
+  --ink-2: #141418;
+  --ink-3: #1d1d23;
+  --paper: #f4f3f0;
+  --paper-dim: #a9a9b3;
+  --bone: #ecece8;
+  --bone-2: #dfdfda;
+  --bone-ink: #0b0b0d;
+  --bone-dim: #4b4b54;
+  --cobalt: #2340ff;
+  --cobalt-deep: #1b2fd1;
+  --cobalt-soft: #7b8cff;
+
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --section-y: clamp(6rem, 14vw, 13rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --color-bone: var(--bone);
+  --color-bone-2: var(--bone-2);
+  --color-bone-dim: var(--bone-dim);
+  --color-cobalt: var(--cobalt);
+  --color-cobalt-deep: var(--cobalt-deep);
+  --color-cobalt-soft: var(--cobalt-soft);
+  --font-display: var(--font-bricolage), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--ink);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--cobalt) var(--ink);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--cobalt);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--cobalt);
+  border-radius: 10px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cobalt-soft);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.on-bone :focus-visible {
+  outline-color: var(--cobalt);
+}
+.on-cobalt :focus-visible {
+  outline-color: #fff;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+button {
+  cursor: pointer;
+}
+
+/* ───────── type scale (display is Bricolage, text is Hanken) ───────── */
+.t-mega {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(3.6rem, 10.6vw, 10.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+}
+.t-h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 6.6vw, 6.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.t-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.6vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.t-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.t-lead {
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  line-height: 1.55;
+  max-width: 44ch;
+}
+.t-body {
+  max-width: 62ch;
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.wrap {
+  padding-inline: var(--gutter);
+  margin-inline: auto;
+  max-width: 1760px;
+}
+.section-y {
+  padding-block: var(--section-y);
+}
+
+/* ───────── fields ───────── */
+.on-bone {
+  background: var(--bone);
+  color: var(--bone-ink);
+}
+.on-cobalt {
+  background: var(--cobalt);
+  color: #fff;
+}
+.on-ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+@layer components {
+/* ───────── buttons: fully round, flat, one fill ───────── */
+.btn {
+  --btn-bg: var(--cobalt);
+  --btn-fg: #fff;
+  --btn-hover: var(--paper);
+  --btn-hover-fg: var(--ink);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 56px;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: color 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+  will-change: transform;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--btn-hover);
+  border-radius: 50%;
+  transform: translateY(175%) scale(1.3, 1.6);
+  transition: transform 0.6s var(--ease-out);
+}
+.btn:hover,
+.btn:focus-visible {
+  color: var(--btn-hover-fg);
+}
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: translateY(0) scale(1.3, 1.6);
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn-light {
+  --btn-bg: var(--paper);
+  --btn-fg: var(--ink);
+  --btn-hover: var(--cobalt);
+  --btn-hover-fg: #fff;
+}
+.btn-ink {
+  --btn-bg: var(--ink);
+  --btn-fg: #fff;
+  --btn-hover: #fff;
+  --btn-hover-fg: var(--ink);
+}
+.btn-ghost {
+  --btn-bg: var(--ink-3);
+  --btn-fg: var(--paper);
+  --btn-hover: var(--paper);
+  --btn-hover-fg: var(--ink);
+}
+
+.link-u {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s var(--ease-out);
+}
+.link-u:hover,
+.link-u:focus-visible {
+  background-size: 100% 2px;
+}
+
+}
+
+/* ───────── helpers ───────── */
+.mask-line {
+  overflow: hidden;
+  display: block;
+}
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 200;
+  background: var(--cobalt);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ───────── range slider ───────── */
+.vx-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+.vx-range::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--ink-3);
+}
+.vx-range::-moz-range-track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--ink-3);
+}
+.vx-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 32px;
+  width: 32px;
+  margin-top: -11px;
+  border-radius: 50%;
+  background: var(--cobalt);
+  border: 5px solid var(--paper);
+  transition: transform 0.3s var(--ease-out);
+}
+.vx-range::-moz-range-thumb {
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: var(--cobalt);
+  border: 5px solid var(--paper);
+}
+.vx-range:hover::-webkit-slider-thumb,
+.vx-range:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+/* ───────── testimonial swap ───────── */
+@keyframes vx-quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.vx-quote-in {
+  animation: vx-quote-in 0.8s var(--ease-out) both;
 }
