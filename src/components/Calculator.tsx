@@ -2,9 +2,8 @@
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { TIERS } from "@/lib/data";
+import { INSTAGRAM_URL, TIERS } from "@/lib/data";
 import { sceneState } from "@/lib/sceneState";
-import { scrollToTarget } from "@/lib/smooth";
 
 const PLATFORMS = [
   { name: "Spotify", factor: 1 },
@@ -206,15 +205,9 @@ export default function Calculator() {
               <p className="max-w-[40ch] text-sm text-white/80">
                 Illustrative projection from our past campaign averages. It is an estimate, not a guarantee.
               </p>
-              <a
-                href="#contact"
-                className="btn btn-ink shrink-0"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToTarget("#contact");
-                }}
-              >
-                Plan this campaign
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ink shrink-0">
+                DM us this plan
+                <span className="sr-only"> (opens Instagram in a new tab)</span>
               </a>
             </div>
           </div>

@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { gsap, SplitText, useGSAP, prefersReducedMotion } from "@/lib/gsap";
-import { LATEST_PLACEMENTS } from "@/lib/data";
+import { INSTAGRAM_URL, LATEST_PLACEMENTS } from "@/lib/data";
+import PlatformIcon from "./PlatformIcon";
 import { sceneState } from "@/lib/sceneState";
 import { scrollToTarget } from "@/lib/smooth";
 
@@ -84,14 +85,12 @@ export default function Hero() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <span data-magnetic className="inline-block">
                 <a
-                  href="#contact"
+                  href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
                   className="btn w-full sm:w-auto"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToTarget("#contact");
-                  }}
                 >
-                  Book a strategy call
+                  <PlatformIcon name="Instagram" className="h-[1.1em] w-[1.1em]" />
+                  DM us on Instagram
+                  <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </span>
               <a

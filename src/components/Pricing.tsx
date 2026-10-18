@@ -1,7 +1,6 @@
 "use client";
 
-import { PLANS } from "@/lib/data";
-import { scrollToTarget } from "@/lib/smooth";
+import { INSTAGRAM_URL, PLANS } from "@/lib/data";
 
 const SKINS = [
   { bg: "var(--ink-2)", fg: "var(--paper)", dim: "var(--paper-dim)", dot: "var(--cobalt-soft)", btn: "btn-ghost" },
@@ -18,7 +17,7 @@ export default function Pricing() {
             Simple plans. Real reach.
           </h2>
           <p className="t-lead text-paper-dim" data-reveal>
-            Fixed scope, fixed price, no retainer. Every plan includes weekly reporting and real, vetted playlists.
+            Priced per week, no retainer, no lock-in. Every plan includes weekly reporting and real, vetted playlists.
           </p>
         </div>
 
@@ -35,8 +34,13 @@ export default function Pricing() {
                 <p className="text-sm font-semibold" style={{ color: s.dim }}>
                   {p.tag}
                 </p>
-                <h3 className="t-h2 mt-3 !text-[clamp(2.25rem,4.4vw,4.25rem)]">{p.name}</h3>
-                <p className="t-num mt-7 text-[clamp(3rem,6vw,5.5rem)]">{p.price}</p>
+                <h3 className="t-h2 mt-3 !text-[clamp(2rem,3.5vw,3.5rem)]">{p.name}</h3>
+                <p className="mt-7 flex items-baseline gap-3">
+                  <span className="t-num text-[clamp(3rem,6vw,5.5rem)]">{p.price}</span>
+                  <span className="font-display text-xl font-bold tracking-[-0.02em]" style={{ color: s.dim }}>
+                    {p.unit}
+                  </span>
+                </p>
                 <p className="mt-2 font-medium" style={{ color: s.dim }}>
                   {p.cadence}
                 </p>
@@ -53,15 +57,9 @@ export default function Pricing() {
                   ))}
                 </ul>
 
-                <a
-                  href="#contact"
-                  className={`btn ${s.btn} mt-10 w-full`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToTarget("#contact");
-                  }}
-                >
+                <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className={`btn ${s.btn} mt-10 w-full`}>
                   {p.cta}
+                  <span className="sr-only"> (opens Instagram in a new tab)</span>
                 </a>
               </article>
             );
@@ -69,7 +67,7 @@ export default function Pricing() {
         </div>
 
         <p className="mt-10 max-w-[60ch] text-paper-dim sm:mt-16" data-reveal>
-          Running a label or a roster? We build custom multi-artist campaigns. Tell us what you are releasing and we will scope it.
+          Running a label or a roster? We build custom multi-artist campaigns. DM us what you are releasing and we will scope it.
         </p>
       </div>
     </section>

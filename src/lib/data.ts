@@ -1,6 +1,8 @@
 /* All copy and demo figures live here so they are easy to swap for real data. */
 
-export const CONTACT_EMAIL = "hello@vexoraa.com";
+export const INSTAGRAM_URL =
+  "https://www.instagram.com/vexoraamarketing?cplk=MWZ3dWM3cGRqZGExOA%3D%3D&utm_source=qr";
+export const INSTAGRAM_HANDLE = "@vexoraamarketing";
 
 export const NAV_LINKS = [
   { label: "Playlists", href: "#playlists" },
@@ -141,6 +143,12 @@ export const RESULTS = [
 
 export type CaseStudy = {
   artist: string;
+  /** file name (no extension) looked up in public/artists/ */
+  slug: string;
+  fromN: number;
+  toN: number;
+  /** top playlists shown in the analytics mockup */
+  top: { name: string; reach: string }[];
   genre: string;
   platform: string;
   from: string;
@@ -155,6 +163,10 @@ export type CaseStudy = {
 export const CASES: CaseStudy[] = [
   {
     artist: "Nova Reyes",
+    slug: "nova-reyes",
+    fromN: 8214,
+    toN: 412038,
+    top: [{ name: "Indie Pulse", reach: "184K" }, { name: "Late Night Drive Radio", reach: "262K" }],
     genre: "Indie pop",
     platform: "Spotify",
     from: "8.2K",
@@ -167,6 +179,10 @@ export const CASES: CaseStudy[] = [
   },
   {
     artist: "Dax Mercer",
+    slug: "dax-mercer",
+    fromN: 14306,
+    toN: 690100,
+    top: [{ name: "Rap Rotation Live", reach: "780K" }, { name: "Fresh Frequency", reach: "48K" }],
     genre: "Hip-hop",
     platform: "YouTube + Spotify",
     from: "14K",
@@ -179,6 +195,10 @@ export const CASES: CaseStudy[] = [
   },
   {
     artist: "Isla Winter",
+    slug: "isla-winter",
+    fromN: 3128,
+    toN: 186244,
+    top: [{ name: "Sunday Static", reach: "91K" }, { name: "Bedroom Pop Index", reach: "72K" }],
     genre: "Dream pop",
     platform: "Spotify",
     from: "3.1K",
@@ -191,6 +211,10 @@ export const CASES: CaseStudy[] = [
   },
   {
     artist: "Halcyon Drift",
+    slug: "halcyon-drift",
+    fromN: 21447,
+    toN: 540300,
+    top: [{ name: "Chill Atlas", reach: "910K" }, { name: "Main Stage Mixtape", reach: "1.8M" }],
     genre: "Electronic",
     platform: "SoundCloud + Apple Music",
     from: "21K",
@@ -203,6 +227,10 @@ export const CASES: CaseStudy[] = [
   },
   {
     artist: "Mira Okafor",
+    slug: "mira-okafor",
+    fromN: 26033,
+    toN: 1104876,
+    top: [{ name: "Global Pulse 100", reach: "1.4M" }, { name: "Sound Atlas Hits", reach: "2.3M" }],
     genre: "Afrobeats",
     platform: "Spotify + YouTube",
     from: "26K",
@@ -290,6 +318,7 @@ export const TESTIMONIALS: Testimonial[] = [
 export type Plan = {
   name: string;
   price: string;
+  unit: string;
   cadence: string;
   tag: string;
   features: string[];
@@ -299,12 +328,13 @@ export type Plan = {
 export const PLANS: Plan[] = [
   {
     name: "Launch",
-    price: "$1,500",
-    cadence: "4-week campaign",
+    price: "$80",
+    unit: "per week",
+    cadence: "Weekly campaign, 4 weeks recommended",
     tag: "For your next single",
     features: [
       "Pitching to Emerging and Rising playlists",
-      "Up to 12 curated placements",
+      "Up to 3 curated placements every week",
       "Profile and pre-save optimisation",
       "Weekly performance report",
     ],
@@ -312,31 +342,33 @@ export const PLANS: Plan[] = [
   },
   {
     name: "Growth",
-    price: "$3,900",
-    cadence: "8-week campaign",
+    price: "$160",
+    unit: "per week",
+    cadence: "Weekly campaign, 8 weeks recommended",
     tag: "Most artists choose this",
     features: [
       "Everything in Launch, plus Major tier pitching",
-      "Up to 30 curated placements",
+      "Up to 4 curated placements every week",
       "Short-form and creator seeding plan",
       "Targeted ads on your lead track",
-      "Fortnightly strategy call",
+      "Fortnightly strategy chat",
     ],
     cta: "Start with Growth",
   },
   {
     name: "Breakthrough",
-    price: "$8,500",
-    cadence: "12-week campaign",
+    price: "$300",
+    unit: "per week",
+    cadence: "2-week sprint, $600 total",
     tag: "For label-level releases",
     features: [
       "Flagship tier pitching up to 2M+ listeners",
-      "Up to 60 curated placements",
+      "Priority curator access for release week",
       "Multi-platform: Spotify, YouTube, SoundCloud, Apple Music",
       "Dedicated campaign lead",
       "Release strategy for the next 90 days",
     ],
-    cta: "Plan a Breakthrough",
+    cta: "Start with Breakthrough",
   },
 ];
 
@@ -367,7 +399,7 @@ export const FAQS = [
   },
   {
     q: "Is there a contract or minimum term?",
-    a: "Each campaign is a fixed scope with a fixed price. No retainer, no auto-renewal. If a campaign works, you can book the next one at a priority rate.",
+    a: "No. Plans are priced per week, so you pay for the weeks you run. Breakthrough is a fixed 2-week sprint. No retainer, no auto-renewal, and if a campaign works you can keep going week by week.",
   },
 ];
 
@@ -385,9 +417,6 @@ export const FOOTER_LINKS = {
     { label: "FAQ", href: "#faq" },
   ],
   Follow: [
-    { label: "Instagram", href: "https://instagram.com" },
-    { label: "TikTok", href: "https://tiktok.com" },
-    { label: "YouTube", href: "https://youtube.com" },
-    { label: "X", href: "https://x.com" },
+    { label: "Instagram", href: INSTAGRAM_URL },
   ],
 } as const;

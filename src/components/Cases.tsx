@@ -4,13 +4,14 @@ import { useRef } from "react";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { CASES } from "@/lib/data";
 import Cover from "./Cover";
+import ListenersMockup from "./ListenersMockup";
 
 /**
  * Case studies. On wide screens the section pins and the track travels
  * sideways with the scroll; the cover art drifts at its own speed.
  * On phones and tablets it is a plain vertical list.
  */
-export default function Cases() {
+export default function Cases({ photos = {} }: { photos?: Record<string, string> }) {
   const root = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
@@ -85,9 +86,26 @@ export default function Cases() {
             data-case
             className="relative flex shrink-0 flex-col justify-between gap-8 overflow-hidden rounded-[1.75rem] bg-ink-2 p-5 sm:rounded-[2.5rem] sm:p-8 lg:w-[min(58vw,860px)] lg:flex-row lg:gap-10"
           >
-            <div className="relative aspect-square max-h-[26rem] w-full overflow-hidden rounded-2xl sm:rounded-3xl lg:aspect-auto lg:h-full lg:max-h-none lg:w-[44%]">
+            <div className="relative flex aspect-[4/5] max-h-[34rem] w-full items-center justify-center overflow-hidden rounded-2xl sm:rounded-3xl lg:aspect-auto lg:h-full lg:max-h-none lg:w-[44%]">
               <div data-cover className="absolute -inset-x-[16%] inset-y-0">
-                <Cover variant={c.cover} palette={c.cover + 1} className="h-full w-full" />
+                {photos[c.slug] ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={photos[c.slug]} alt={`${c.artist}, ${c.genre} artist`} className="h-full w-full object-cover" loading="lazy" />
+                ) : (
+                  <Cover variant={c.cover} palette={c.cover + 1} className="h-full w-full" />
+                )}
+              </div>
+              <div className="relative w-[72%] max-w-[19rem] py-6 lg:w-[86%]">
+                <ListenersMockup
+                  artist={c.artist}
+                  platform={c.platform.split(" + ")[0]}
+                  fromN={c.fromN}
+                  toN={c.toN}
+                  weeks={parseInt(c.timeline, 10)}
+                  top={c.top}
+                  photo={photos[c.slug]}
+                  cover={c.cover}
+                />
               </div>
             </div>
 
@@ -102,7 +120,7 @@ export default function Cases() {
 
               <div>
                 <p className="text-sm font-medium text-paper-dim">Monthly listeners</p>
-                <p className="t-num mt-1 flex flex-wrap items-baseline gap-x-3 text-[clamp(2.5rem,4vw,4.25rem)]">
+                <p className="t-num mt-1 flex flex-wrap items-baseline gap-x-3 text-[clamp(2.25rem,3.4vw,3.5rem)]">
                   <span className="text-paper-dim">{c.from}</span>
                   <span className="text-cobalt-soft" aria-label="to">
                     &rarr;

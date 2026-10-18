@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { SERVICES } from "@/lib/data";
 import Cover from "./Cover";
+import PlatformIcon, { type PlatformName } from "./PlatformIcon";
 
 function Plus({ open }: { open: boolean }) {
   return (
@@ -51,7 +52,15 @@ export default function Services() {
                     aria-controls={`svc-${i}`}
                     onClick={() => setActive(open ? -1 : i)}
                   >
-                    <span className="t-h2 !text-[clamp(2.25rem,7.4vw,7rem)]">{s.platform}</span>
+                    <span className="flex min-w-0 items-center gap-4 sm:gap-7">
+                      <span
+                        className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl transition-colors duration-700 sm:h-20 sm:w-20 sm:rounded-3xl lg:h-24 lg:w-24"
+                        style={{ background: open ? "var(--paper)" : "var(--ink)", color: open ? "var(--ink)" : "var(--paper)" }}
+                      >
+                        <PlatformIcon name={s.platform as PlatformName} className="h-6 w-6 sm:h-10 sm:w-10 lg:h-12 lg:w-12" />
+                      </span>
+                      <span className="t-h2 !text-[clamp(2rem,7.4vw,7rem)]">{s.platform}</span>
+                    </span>
                     <span className="flex items-center gap-8">
                       <span className="hidden text-right text-sm font-medium opacity-70 md:block">
                         <span className="t-num block text-4xl">{s.metric}</span>

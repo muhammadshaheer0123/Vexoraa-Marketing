@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-import { NAV_LINKS } from "@/lib/data";
+import { INSTAGRAM_URL, NAV_LINKS } from "@/lib/data";
+import PlatformIcon from "./PlatformIcon";
 import { getLenis, scrollToTarget } from "@/lib/smooth";
 
 export default function Nav() {
@@ -87,8 +88,13 @@ export default function Nav() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a href="#contact" onClick={go("#contact")} className="btn hidden !min-h-[46px] !px-5 !text-[0.95rem] sm:inline-flex">
-              Book a strategy call
+            <a
+              href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
+              className="btn hidden !min-h-[46px] !px-5 !text-[0.95rem] sm:inline-flex"
+            >
+              <PlatformIcon name="Instagram" className="h-[1.1em] w-[1.1em]" />
+              DM us on Instagram
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
             <button
               type="button"
@@ -140,8 +146,10 @@ export default function Nav() {
             </a>
           ))}
         </nav>
-        <a href="#contact" onClick={go("#contact")} className="btn w-full">
-          Book a strategy call
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="btn w-full">
+          <PlatformIcon name="Instagram" className="h-[1.1em] w-[1.1em]" />
+          DM us on Instagram
+          <span className="sr-only"> (opens in a new tab)</span>
         </a>
       </div>
     </>

@@ -1,3 +1,5 @@
+import { readdirSync } from "node:fs";
+import path from "node:path";
 import Preloader from "@/components/Preloader";
 import SceneMount from "@/components/SceneMount";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -17,7 +19,21 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 
+/** Photos dropped into public/artists/<slug>.jpg are picked up automatically. */
+function artistPhotos(): Record<string, string> {
+  try {
+    return Object.fromEntries(
+      readdirSync(path.join(process.cwd(), "public", "artists"))
+        .filter((f) => /\.(jpe?g|png|webp|avif)$/i.test(f))
+        .map((f) => [f.replace(/\.[^.]+$/, "").toLowerCase(), `/artists/${f}`]),
+    );
+  } catch {
+    return {};
+  }
+}
+
 export default function Home() {
+  const photos = artistPhotos();
   return (
     <>
       <a href="#main" className="skip-link">
@@ -33,7 +49,7 @@ export default function Home() {
         <Ladder />
         <Services />
         <Results />
-        <Cases />
+        <Cases photos={photos} />
         <Process />
         <Calculator />
         <Testimonials />
