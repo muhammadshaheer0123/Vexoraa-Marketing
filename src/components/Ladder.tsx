@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { TIERS } from "@/lib/data";
 import { sceneState } from "@/lib/sceneState";
 import Cover from "./Cover";
@@ -19,14 +19,16 @@ export default function Ladder() {
       const panels = gsap.utils.toArray<HTMLElement>("[data-tier]");
       const segs = gsap.utils.toArray<HTMLElement>("[data-seg]");
 
-      if (prefersReducedMotion()) {
-        // static: show all four tiers stacked, no pin
-        gsap.set(panels, { position: "relative", opacity: 1, pointerEvents: "auto" });
-        return;
-      }
-
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 0px)", () => {
+
+      // reduced motion, or a screen too short to pin (phones in landscape): stack all four tiers
+      mm.add("(max-height: 619px), (prefers-reduced-motion: reduce)", () => {
+        gsap.set(panels, { position: "relative", opacity: 1, yPercent: 0, pointerEvents: "auto" });
+        gsap.set("[data-tier]:not(:last-child)", { marginBottom: "3.5rem" });
+        gsap.set("[data-segs]", { display: "none" });
+      });
+
+      mm.add("(min-height: 620px) and (prefers-reduced-motion: no-preference)", () => {
         gsap.set(panels, { opacity: 0, yPercent: 8, pointerEvents: "none" });
         gsap.set(panels[0], { opacity: 1, yPercent: 0, pointerEvents: "auto" });
         gsap.set(segs, { backgroundColor: "#1d1d23" });
@@ -73,7 +75,7 @@ export default function Ladder() {
   );
 
   return (
-    <section id="playlists" ref={root} className="relative z-10 flex h-[100svh] min-h-[640px] flex-col overflow-hidden pt-24 sm:pt-28">
+    <section id="playlists" ref={root} className="relative z-10 flex h-auto flex-col overflow-hidden pt-24 [@media(min-height:620px)]:h-[100svh] sm:pt-28">
       <div className="wrap flex min-h-0 w-full flex-1 flex-col">
         <h2 className="t-h2 max-w-[14ch]" data-split>
           Playlists that move the needle.
@@ -115,7 +117,7 @@ export default function Ladder() {
           ))}
         </div>
 
-        <div className="flex gap-2 pb-6 pt-4 sm:pb-8" aria-hidden="true">
+        <div data-segs className="flex gap-2 pb-6 pt-4 sm:pb-8" aria-hidden="true">
           {TIERS.map((t) => (
             <div key={t.name} data-seg className="h-2 flex-1 rounded-full bg-ink-3" />
           ))}

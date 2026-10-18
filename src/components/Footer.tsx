@@ -37,14 +37,14 @@ export default function Footer() {
           {Object.entries(FOOTER_LINKS).map(([title, links]) => (
             <nav key={title} aria-label={title}>
               <h2 className="font-display text-lg font-bold tracking-[-0.02em]">{title}</h2>
-              <ul className="mt-4 flex flex-col gap-2.5">
+              <ul className="mt-3 flex flex-col">
                 {links.map((l) => {
                   const external = l.href.startsWith("http");
                   return (
                     <li key={l.label}>
                       <a
                         href={l.href}
-                        className="link-u text-paper-dim transition-colors hover:text-paper"
+                        className="link-u inline-block py-2.5 text-paper-dim transition-colors hover:text-paper"
                         {...(external
                           ? { target: "_blank", rel: "noopener noreferrer" }
                           : {

@@ -358,8 +358,8 @@ export const PLANS: Plan[] = [
   {
     name: "Breakthrough",
     price: "$300",
-    unit: "per week",
-    cadence: "2-week sprint, $600 total",
+    unit: "for 2 weeks",
+    cadence: "2-week sprint, one flat price",
     tag: "For label-level releases",
     features: [
       "Flagship tier pitching up to 2M+ listeners",

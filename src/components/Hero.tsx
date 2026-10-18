@@ -18,8 +18,8 @@ export default function Hero() {
       const portrait = window.innerWidth / window.innerHeight < 1.1;
       // formation sits right of the headline on landscape screens, above it on portrait
       sceneState.x = portrait ? 0 : 0.2;
-      sceneState.y = portrait ? 0.25 : 0.06;
-      sceneState.opacity = portrait ? 0.55 : 1;
+      sceneState.y = portrait ? 0.27 : 0.06;
+      sceneState.opacity = portrait ? 0.42 : 1;
       sceneState.zoom = 1;
 
       // ── intro ──
